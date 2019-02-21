@@ -62,4 +62,11 @@ public class ProxyDictService implements DictService {
 		jedis.del(arr);
 		jedis.close();
 	}
+	@Override
+	public int updateSelective(Dict dict) {
+		// TODO Auto-generated method stub
+		String key="Dictkey*";
+		redisDelKeys(key);
+		return dictService.updateSelective(dict);
+	}
 }

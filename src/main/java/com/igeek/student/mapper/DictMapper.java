@@ -19,6 +19,6 @@ public interface DictMapper {
     int updateByPrimaryKeySelective(Dict record);
 
     int updateByPrimaryKey(Dict record);
-    
     long count(Integer did);
+
 }

@@ -49,10 +49,18 @@
       <tbody id="student">
      
       </tbody>
+      <tfoot>
+      <tr>
+      <td colspan="4">
+      	<button type='button' class='btn btn-primary btn-xs save'>添加</button>
+      </td>
+      </tr>
+      </tfoot>
 </table>
  	
 <div id="Paginator" style="text-align: center"> <ul id="pageLimit"></ul> </div>
- 	</div>
+ 	
+ </div>
  </div>
 
 </div>
@@ -64,6 +72,8 @@
 <script type="text/javascript" src="static/js/bootstrap-paginator.min.js" ></script>
 <script type="text/javascript" src="static/js/jquery.ztree.core.min.js" ></script>
 <script type="text/javascript" src="static/js/jquery.ztree.exedit.js" ></script>
+<script type="text/javascript" src="static/js/jquery.ztree.excheck.js" ></script>
+
 <script type="text/javascript">
 
 var  jquery=function() {
@@ -98,6 +108,7 @@ var  jquery=function() {
 					+"</td></tr>"
 				}
 				$("#student").html(html);
+		
 				self.loadEvens();
 				self.page(e);
 				
@@ -114,7 +125,11 @@ var  jquery=function() {
 					removeHoverDom: removeHoverDom,//当鼠标移动到节点上时，显示用户自定义控件      
 				
 					},  
-			
+					check: {
+						enable: true,
+						chkStyle: "radio",
+						chkboxType: { "Y": "p", "N": "s" }
+					},
 				async: {
 					enable: true,
 					url: "/dict/tree",
@@ -129,9 +144,8 @@ var  jquery=function() {
 				callback: {
 					beforeRemove:beforeRemove,
 					onClick: zTreeOnClick,
-					
+					onRename: zTreeOnRename,
 					onRemove: onRemove, //移除事件
-
 				}
 				
 			};
@@ -178,7 +192,20 @@ var  jquery=function() {
 					
 		      }});
 		}
-		
+		function zTreeOnRename(event, treeId, treeNode, isCancel) {
+	
+			$.ajax({ 
+				url: "/dict",
+				type:"put",
+				data:{
+					did:treeNode.id,
+					dname:treeNode.name,
+				},
+				success: function(e){
+				
+					
+		      }});
+		}
 		$.fn.zTree.init($("#tree"), setting);
 		function zTreeOnClick(event, treeId, treeNode) {
     	 
@@ -187,7 +214,7 @@ var  jquery=function() {
 	    	        pageSize:10,
 	    	        did:treeNode.id
 	    	  }
-    		console.log(info);
+    	
             self.loadStudent(info);
     	};
     
@@ -239,7 +266,16 @@ var  jquery=function() {
     		
     	})
     	
-    	
+    	$(".save").click(function(){
+    		
+    		
+    		var treeObj = $.fn.zTree.getZTreeObj("tree");
+    		var nodes = treeObj.getCheckedNodes(true);
+    		if(nodes.length!=1){
+    			 return confirm("只能同时选中一个节点添加？");
+    		}
+    		
+    	})
     	
     	$(".update").click(function(){
     		

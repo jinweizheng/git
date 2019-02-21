@@ -9,6 +9,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.igeek.student.common.DictTree;
 import com.igeek.student.mapper.DictMapper;
+import com.igeek.student.mapper.StudentMapper;
 import com.igeek.student.pojo.Dict;
 import com.igeek.student.pojo.DictExample;
 import redis.clients.jedis.Jedis;
@@ -16,7 +17,8 @@ import redis.clients.jedis.Jedis;
 public class DictServiceImpl implements DictService {
 	@Autowired
 	private DictMapper dictMapper;
-
+	@Autowired
+	private StudentMapper studentMapper;
 
 	@Override
 	public List<DictTree> listDict(Dict dict) {
@@ -33,12 +35,14 @@ public class DictServiceImpl implements DictService {
 			dictTree.setTitle(dict2.getDname());
 			dictTree.setIsParent( dictMapper.count(dict2.getDid())>0?true:false);
 			dictTree.setParentId(dict2.getParentId());
+			
 			lTrees.add(dictTree);
 		}
 	
 		return lTrees;
 	}
-
+	
+	
 
 	@Override
 	public int saveDict(Dict dict) {
@@ -52,6 +56,14 @@ public class DictServiceImpl implements DictService {
 	public int del(Integer id) {
 		// TODO Auto-generated method stub
 		return dictMapper.deleteByPrimaryKey(id);
+	}
+
+
+
+	@Override
+	public int updateSelective(Dict dict) {
+		// TODO Auto-generated method stub
+		return dictMapper.updateByPrimaryKeySelective(dict);
 	}
 
 	

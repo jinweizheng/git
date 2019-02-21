@@ -12,6 +12,8 @@ public class Dict {
     
     private Boolean parent;
 
+
+    
     public Integer getDid() {
         return did;
     }
@@ -57,6 +59,8 @@ public class Dict {
 		return "Dict [did=" + did + ", dname=" + dname + ", parentId=" + parentId + ", dtype=" + dtype + ", parent="
 				+ parent + "]";
 	}
+
+	
 
 	
 }
