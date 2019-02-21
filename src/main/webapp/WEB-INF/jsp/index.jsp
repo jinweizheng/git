@@ -9,7 +9,9 @@
 <link rel="stylesheet" href="static/css/zTreeStyle.css" />
 
 <title>首页</title>
-
+<style type="text/css">
+.ztree li span.button.add {margin-left:2px; margin-right: -1px; background-position:-144px 0; vertical-align:top; *vertical-align:middle}
+	</style>
 </head>
 <body>
 
@@ -110,7 +112,8 @@ var  jquery=function() {
 				 view: {  
 					addHoverDom: addHoverDom,
 					removeHoverDom: removeHoverDom,//当鼠标移动到节点上时，显示用户自定义控件      
-					    },  
+				
+					},  
 			
 				async: {
 					enable: true,
@@ -124,25 +127,58 @@ var  jquery=function() {
 		                renameTitle:'重命名'
 		            },
 				callback: {
-					onClick: zTreeOnClick
+					beforeRemove:beforeRemove,
+					onClick: zTreeOnClick,
 					
+					onRemove: onRemove, //移除事件
+
 				}
 				
 			};
+	
 		function addHoverDom(treeId, treeNode) {
-			var aObj = $("#" + treeNode.tId + "_a");
-			if ($("#diyBtn_"+treeNode.id).length>0) return;
-			var editStr = "<span id='diyBtn_space_" +treeNode.id+ "' > </span>"
-				+ "<button type='button' class='diyBtn1' id='diyBtn_" + treeNode.id
-				+ "' title='"+treeNode.name+"' onfocus='this.blur();'></button>";
-			aObj.append(editStr);
-			var btn = $("#diyBtn_"+treeNode.id);
-			if (btn) btn.bind("click", function(){alert("diy Button for " + treeNode.name);});
+			var sObj = $("#" + treeNode.tId + "_span");
+			if (treeNode.editNameFlag || $("#addBtn_"+treeNode.tId).length>0) return;
+			var addStr = "<span class='button add' id='addBtn_" + treeNode.tId
+				+ "' title='add node' onfocus='this.blur();'></span>";
+			sObj.after(addStr);
+			var btn = $("#addBtn_"+treeNode.tId);
+			if (btn) btn.bind("click", function(){
+				var zTree = $.fn.zTree.getZTreeObj("tree");
+				$.ajax({ 
+					url: "/dict",
+					type:"post",
+					data:{
+						dname:"新节点",
+						parentId:treeNode.id,
+						dtype:"address",
+					},
+					success: function(e){
+						console.log(e);
+					zTree.addNodes(treeNode, {id:e, pId:treeNode.id, name:"新节点"});
+						
+			      }});
+				return false;
+			});
 		};
 		function removeHoverDom(treeId, treeNode) {
-			$("#diyBtn_"+treeNode.id).unbind().remove();
-			$("#diyBtn_space_" +treeNode.id).unbind().remove();
+			$("#addBtn_"+treeNode.tId).unbind().remove();
 		};
+		function beforeRemove(e,treeId,treeNode){
+	        return confirm("你确定要删除吗？");
+	    }
+		
+		function onRemove(e, treeId, treeNode) {
+		 
+			$.ajax({ 
+				url: "/dict/"+treeNode.id,
+				type:"delete",
+				success: function(e){
+				
+					
+		      }});
+		}
+		
 		$.fn.zTree.init($("#tree"), setting);
 		function zTreeOnClick(event, treeId, treeNode) {
     	 

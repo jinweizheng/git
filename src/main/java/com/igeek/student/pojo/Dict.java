@@ -52,5 +52,11 @@ public class Dict {
 		this.parent = parent;
 	}
 
+	@Override
+	public String toString() {
+		return "Dict [did=" + did + ", dname=" + dname + ", parentId=" + parentId + ", dtype=" + dtype + ", parent="
+				+ parent + "]";
+	}
+
 	
 }

@@ -9,5 +9,6 @@ public interface DictService{
     
 
     List<DictTree> listDict(Dict dict);
-
+    int saveDict(Dict dict);
+    int del(Integer id);
 }

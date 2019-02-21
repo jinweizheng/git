@@ -39,6 +39,21 @@ public class DictServiceImpl implements DictService {
 		return lTrees;
 	}
 
+
+	@Override
+	public int saveDict(Dict dict) {
+		// TODO Auto-generated method stub
+	
+		return 	dictMapper.insert(dict);
+	}
+
+
+	@Override
+	public int del(Integer id) {
+		// TODO Auto-generated method stub
+		return dictMapper.deleteByPrimaryKey(id);
+	}
+
 	
 
 	

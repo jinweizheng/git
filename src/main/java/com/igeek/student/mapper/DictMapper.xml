@@ -71,7 +71,7 @@
     delete from dict
     where did = #{did,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.igeek.student.pojo.Dict">
+  <insert id="insert" parameterType="com.igeek.student.pojo.Dict" useGeneratedKeys="true" keyColumn="did" keyProperty="did">
     insert into dict (did, dname, parent_id, 
       dtype)
     values (#{did,jdbcType=INTEGER}, #{dname,jdbcType=VARCHAR}, #{parentId,jdbcType=INTEGER}, 

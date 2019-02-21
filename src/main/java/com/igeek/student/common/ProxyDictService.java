@@ -2,6 +2,7 @@ package com.igeek.student.common;
 
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -30,8 +31,6 @@ public class ProxyDictService implements DictService {
 		String str=jedis.get(key);
 		
 		if (str!=null) {
-			System.out.println("redis 取出数据");
-
 			jedis.close();
 			return JSONObject.parseArray(str, DictTree.class);
 		}
@@ -40,5 +39,27 @@ public class ProxyDictService implements DictService {
 		jedis.close();
 		return trees;
 	}
+	@Override
+	public int saveDict(Dict dict) {
+		// TODO Auto-generated method stub
+		String key="Dictkey*";
+		redisDelKeys(key);
+		dictService.saveDict(dict);
+		return dict.getDid();
+	}
+	@Override
+	public int del(Integer id) {
+		// TODO Auto-generated method stub
+		String key="Dictkey*";
+		redisDelKeys(key);
+		return dictService.del(id);
+	}
 	
+	protected void redisDelKeys(String likeKey) {
+		Jedis jedis =jedisPool.getResource();
+		Set<String> keys=jedis.keys(likeKey);
+		String[] arr=keys.stream().toArray(String[]::new);
+		jedis.del(arr);
+		jedis.close();
+	}
 }
