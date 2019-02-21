@@ -9,10 +9,13 @@ import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
 @MapperScan(basePackages="com.igeek.student.mapper")
-public class Application{
+public class Application   extends SpringBootServletInitializer{
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
 	}
- 
+	 @Override
+	   protected final SpringApplicationBuilder configure(final SpringApplicationBuilder application) {
+	        return application.sources(Application.class);
+	   }
 
 }
