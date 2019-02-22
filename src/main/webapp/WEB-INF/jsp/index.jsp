@@ -51,8 +51,10 @@
       </tbody>
       <tfoot>
       <tr>
-      <td colspan="4">
-      	<button type='button' class='btn btn-primary btn-xs save'>添加</button>
+      <td colspan="3">
+      </td>
+       <td colspan="1">
+      	<button type='button' class='btn btn-primary btn-md save'>添加</button>
       </td>
       </tr>
       </tfoot>
@@ -168,7 +170,7 @@ var  jquery=function() {
 						dtype:"address",
 					},
 					success: function(e){
-						console.log(e);
+						
 					zTree.addNodes(treeNode, {id:e, pId:treeNode.id, name:"新节点"});
 						
 			      }});

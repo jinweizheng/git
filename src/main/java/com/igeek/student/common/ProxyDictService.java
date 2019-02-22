@@ -44,6 +44,7 @@ public class ProxyDictService implements DictService {
 		// TODO Auto-generated method stub
 		String key="Dictkey*";
 		redisDelKeys(key);
+		
 		dictService.saveDict(dict);
 		return dict.getDid();
 	}
@@ -58,8 +59,10 @@ public class ProxyDictService implements DictService {
 	protected void redisDelKeys(String likeKey) {
 		Jedis jedis =jedisPool.getResource();
 		Set<String> keys=jedis.keys(likeKey);
-		String[] arr=keys.stream().toArray(String[]::new);
-		jedis.del(arr);
+		if(!keys.isEmpty()) {
+			String[] arr=keys.stream().toArray(String[]::new);
+			jedis.del(arr);
+		}
 		jedis.close();
 	}
 	@Override

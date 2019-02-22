@@ -1,5 +1,6 @@
 package com.igeek.student.controller;
 
+import java.io.Console;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Delete;
@@ -44,7 +45,7 @@ public class DictController {
 	@PutMapping("/dict")
 	@ResponseBody
 	public Integer put(Dict dict) {
-		
+	
 		
 		
 		return dictService.updateSelective(dict);
