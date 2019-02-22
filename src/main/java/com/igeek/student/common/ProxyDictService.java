@@ -30,6 +30,8 @@ public class ProxyDictService implements DictService {
 		Jedis jedis =jedisPool.getResource();
 		String str=jedis.get(key);
 		
+		
+		
 		if (str!=null) {
 			jedis.close();
 			return JSONObject.parseArray(str, DictTree.class);
