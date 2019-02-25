@@ -38,6 +38,7 @@ public class DictController {
 	@PostMapping("/dict")
 	@ResponseBody
 	public Integer save(Dict dict) {
+	
 		dictService.saveDict(dict);
 		return dict.getDid();
 		
