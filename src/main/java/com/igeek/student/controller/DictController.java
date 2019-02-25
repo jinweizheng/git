@@ -22,7 +22,6 @@ import com.igeek.student.service.DictService;
 public class DictController {
 
 	@Autowired
-	@Qualifier("proxyDictService")
 	private DictService dictService;
 	
 	@RequestMapping("/dict/tree")
