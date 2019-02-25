@@ -25,6 +25,9 @@ public class StudentServiceImpl implements StudentService {
 		if(did!=null) {
 			studentExample.createCriteria().andDidEqualTo(did);
 		}
+		if(student.getName()!=null&&!"".equals(student.getName())) {
+			studentExample.createCriteria().andNameEqualTo(student.getName());
+		}
 		PageHelper.startPage(info.getPageNum(), info.getPageSize());
 		List<Student> list=studentMapper.selectByExample(studentExample);
 		info=new PageInfo<>(list);

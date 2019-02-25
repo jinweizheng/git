@@ -26,7 +26,23 @@
 		<h2 style="color: white;">镇江极客营</h2>
 	</div>
 </div>
+<div class="row"   style="margin-top: 10px">
+	<div class="col-sm-offset-4">
+		
+		<form class="form-inline">
+		<div class="form-group">
+    	名称:
+    	<input type="text" class="form-control sname">
+  		<button type='button' class='btn btn-primary btn-md query'>查找</button>
+  		
+  		</div>
 
+    	</form>
+ 	 </div>
+ 
+	</div>
+	
+</div>
 
  <div class="row">
  		
@@ -65,7 +81,7 @@
  </div>
  </div>
 
-</div>
+
 
 
 
@@ -84,12 +100,13 @@ var  jquery=function() {
 	var pages={
         pageNum:1,
         pageSize:10,
+        name:$(".sname").val()
     }
 	this.init =function(){
 		
 		self.loadTree();
 		self.loadStudent(pages);
-		
+		self.evens();
 	}
 	
 	this.loadStudent=function(data){
@@ -245,9 +262,10 @@ var  jquery=function() {
         		
 		    	var info={
 		    	        pageNum:page,
-		    	        pageSize:10
+		    	        pageSize:10,
+		    	        name:$(".sname").val()
 		    	  }
-		    	console.log(info);
+		    
                 self.loadStudent(info);
             }
 		});
@@ -320,7 +338,18 @@ var  jquery=function() {
     	
     	
     }
-    
+    this.evens=function(){
+   		$(".query").click(function(){
+   			var info={
+   	    	        pageNum:1,
+   	    	        pageSize:10,
+   	    	       	name:$(".sname").val()
+   	    	  }
+   		
+   	        self.loadStudent(info);
+   		})
+    	
+    }
    
 };
 
