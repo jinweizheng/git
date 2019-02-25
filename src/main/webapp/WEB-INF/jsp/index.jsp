@@ -230,7 +230,7 @@ var  jquery=function() {
 		    size:"normal",    
 		    bootstrapMajorVersion: 3,    
 		    alignment:"right",    
-		    numberOfPages:e.pages,    
+		    numberOfPages:10,    
 		    itemTexts: function (type, page, current) {        
 		        switch (type) {            
 		        case "first": return "首页";            
